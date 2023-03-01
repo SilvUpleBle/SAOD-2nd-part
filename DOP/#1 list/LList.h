@@ -16,7 +16,7 @@ private:
 	};
 	size_t size = 0;
 	Node *root, *sentinel;
-	Node* getNode(size_t index) //возвращает узел по ссылке 
+	Node* getNode(size_t index) const //возвращает узел по ссылке 
 	{
 		Node* ptr = root;
 		for (size_t i = 0; i < index; i++)
