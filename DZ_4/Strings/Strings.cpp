@@ -24,6 +24,6 @@ int main()
 
     s += "33";
     std::cout << s << ' ' << strlen(s) << std::endl;
-    
+    Test(s);
     return 0;
 }

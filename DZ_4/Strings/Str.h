@@ -10,6 +10,7 @@ public:
 	
 	Str(const char* p)
 	{
+		
 		if (p) 
 		{
 			m_pszText = new char[strlen(p) + 1];
@@ -32,6 +33,7 @@ public:
 		if (&s == this) 
 			return *this;
 
+		delete[] m_pszText;
 		m_pszText = new char[strlen(s.m_pszText) + 1];
 		strcpy_s(m_pszText, strlen(s.m_pszText) + 1, s.m_pszText);
 		return *this;
@@ -54,6 +56,7 @@ public:
 			temp[j] = sz[j - old_length];
 		}
 
+		delete[] m_pszText;
 		m_pszText = new char[new_length];
 		for (size_t i = 0; i < new_length; i++)
 		{
@@ -68,6 +71,7 @@ public:
 	{
 		size_t new_length = strlen(m_pszText) + strlen(sz) + 1;
 		Str out;
+
 		out.m_pszText = new char[new_length] {0};
 		out += m_pszText;
 		out += sz;
