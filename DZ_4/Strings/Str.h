@@ -72,6 +72,7 @@ public:
 		size_t new_length = strlen(m_pszText) + strlen(sz) + 1;
 		Str out;
 
+		delete[] out.m_pszText;
 		out.m_pszText = new char[new_length] {0};
 		out += m_pszText;
 		out += sz;
