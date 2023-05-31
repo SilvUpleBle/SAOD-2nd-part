@@ -1,0 +1,1662 @@
+﻿USE LockeyDB
+
+/****** Object:  Table dbo.ActionDescription    Script Date: 02.01.2020 12:23:12 ******/
+
+
+
+
+CREATE TABLE dbo.ActionDescription(
+	ActionID int AUTO_INCREMENT NOT NULL,
+	Description nvarchar(200) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY ActionDescription_PK PRIMARY KEY 
+(
+	ActionID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.Alert    Script Date: 02.01.2020 12:23:12 ******/
+
+
+
+
+CREATE TABLE dbo.Alert(
+	AlertID int AUTO_INCREMENT NOT NULL,
+	AlertOccuranceDate datetime NOT NULL,
+	AlertTypeID int NULL,
+	AlertShownUserMapID int NULL,
+	AlertDBCreationDate datetime NULL,
+	AlertShownDate datetime NULL,
+	AlertDeliveredDate datetime NULL,
+	AlertClosedDate datetime NULL,
+	AlertDeliveredUserMapID int NULL,
+	AlertClosedUserMapID int NULL,
+	Comment nvarchar(250) NULL,
+	IMEI varchar(50) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	EventCodeID int NULL,
+	EventParam int NULL,
+ PRIMARY KEY Alert_PK PRIMARY KEY 
+(
+	AlertID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.AlertTypeDictionary    Script Date: 02.01.2020 12:23:12 ******/
+
+
+
+
+CREATE TABLE dbo.AlertTypeDictionary(
+	AlertTypeID int NOT NULL,
+	AlertDescription nvarchar(250) NULL,
+	AlertName nvarchar(250) NOT NULL,
+	AlertShouldNotify bit NULL,
+	IsActual bit NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	EventGroupID int NULL,
+ PRIMARY KEY PK_AlertTypeDictionary PRIMARY KEY 
+(
+	AlertTypeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_Applications    Script Date: 02.01.2020 12:23:12 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_Applications(
+	ApplicationName nvarchar(256) NOT NULL,
+	LoweredApplicationName nvarchar(256) NOT NULL,
+	ApplicationId char(32) NOT NULL,
+	Description nvarchar(256) NULL,
+PRIMARY KEY NONCLUSTERED 
+(
+	ApplicationId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY,
+ UNIQUE KEY 
+(
+	LoweredApplicationName ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY,
+ UNIQUE KEY 
+(
+	ApplicationName ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_Membership    Script Date: 02.01.2020 12:23:12 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_Membership(
+	ApplicationId char(32) NOT NULL,
+	UserId char(32) NOT NULL,
+	Password nvarchar(128) NOT NULL,
+	PasswordFormat int NOT NULL,
+	PasswordSalt nvarchar(128) NOT NULL,
+	MobilePIN nvarchar(16) NULL,
+	Email nvarchar(256) NULL,
+	LoweredEmail nvarchar(256) NULL,
+	PasswordQuestion nvarchar(256) NULL,
+	PasswordAnswer nvarchar(128) NULL,
+	IsApproved bit NOT NULL,
+	IsLockedOut bit NOT NULL,
+	CreateDate datetime NOT NULL,
+	LastLoginDate datetime NOT NULL,
+	LastPasswordChangedDate datetime NOT NULL,
+	LastLockoutDate datetime NOT NULL,
+	FailedPasswordAttemptCount int NOT NULL,
+	FailedPasswordAttemptWindowStart datetime NOT NULL,
+	FailedPasswordAnswerAttemptCount int NOT NULL,
+	FailedPasswordAnswerAttemptWindowStart datetime NOT NULL,
+	Comment text NULL,
+PRIMARY KEY NONCLUSTERED 
+(
+	UserId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_Paths    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_Paths(
+	ApplicationId char(32) NOT NULL,
+	PathId char(32) NOT NULL,
+	Path nvarchar(256) NOT NULL,
+	LoweredPath nvarchar(256) NOT NULL,
+PRIMARY KEY NONCLUSTERED 
+(
+	PathId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_PersonalizationAllUsers    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_PersonalizationAllUsers(
+	PathId char(32) NOT NULL,
+	PageSettings BLOB NOT NULL,
+	LastUpdatedDate datetime NOT NULL,
+PRIMARY KEY 
+(
+	PathId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_PersonalizationPerUser    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_PersonalizationPerUser(
+	Id char(32) NOT NULL,
+	PathId char(32) NULL,
+	UserId char(32) NULL,
+	PageSettings BLOB NOT NULL,
+	LastUpdatedDate datetime NOT NULL,
+PRIMARY KEY NONCLUSTERED 
+(
+	Id ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_Profile    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_Profile(
+	UserId char(32) NOT NULL,
+	PropertyNames text NOT NULL,
+	PropertyValuesString text NOT NULL,
+	PropertyValuesBinary BLOB NOT NULL,
+	LastUpdatedDate datetime NOT NULL,
+PRIMARY KEY 
+(
+	UserId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_Roles    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_Roles(
+	ApplicationId char(32) NOT NULL,
+	RoleId char(32) NOT NULL,
+	RoleName nvarchar(256) NOT NULL,
+	LoweredRoleName nvarchar(256) NOT NULL,
+	Description nvarchar(256) NULL,
+PRIMARY KEY NONCLUSTERED 
+(
+	RoleId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_SchemaVersions    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_SchemaVersions(
+	Feature nvarchar(128) NOT NULL,
+	CompatibleSchemaVersion nvarchar(128) NOT NULL,
+	IsCurrentVersion bit NOT NULL,
+PRIMARY KEY 
+(
+	Feature ASC,
+	CompatibleSchemaVersion ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_Users    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_Users(
+	ApplicationId char(32) NOT NULL,
+	UserId char(32) NOT NULL,
+	UserName nvarchar(256) NOT NULL,
+	LoweredUserName nvarchar(256) NOT NULL,
+	MobileAlias nvarchar(16) NULL,
+	IsAnonymous bit NOT NULL,
+	LastActivityDate datetime NOT NULL,
+PRIMARY KEY NONCLUSTERED 
+(
+	UserId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_UsersInRoles    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_UsersInRoles(
+	UserId char(32) NOT NULL,
+	RoleId char(32) NOT NULL,
+PRIMARY KEY 
+(
+	UserId ASC,
+	RoleId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.aspnet_WebEvent_Events    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.aspnet_WebEvent_Events(
+	EventId char(32) NOT NULL,
+	EventTimeUtc datetime NOT NULL,
+	EventTime datetime NOT NULL,
+	EventType nvarchar(256) NOT NULL,
+	EventSequence decimal(19, 0) NOT NULL,
+	EventOccurrence decimal(19, 0) NOT NULL,
+	EventCode int NOT NULL,
+	EventDetailCode int NOT NULL,
+	Message nvarchar(1024) NULL,
+	ApplicationPath nvarchar(256) NULL,
+	ApplicationVirtualPath nvarchar(256) NULL,
+	MachineName nvarchar(256) NOT NULL,
+	RequestUrl nvarchar(1024) NULL,
+	ExceptionType nvarchar(256) NULL,
+	Details text NULL,
+PRIMARY KEY 
+(
+	EventId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.BeaconToObjectAssignment    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.BeaconToObjectAssignment(
+	SNo int AUTO_INCREMENT NOT NULL,
+	StartDate datetime NOT NULL,
+	EndDate datetime NULL,
+	ObjectDeviceID int NOT NULL,
+	ObjectID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY BeaconToObjectAssignment_PK PRIMARY KEY 
+(
+	SNo ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.CarBodyTypeDictionary    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.CarBodyTypeDictionary(
+	CarBodyTypeID int AUTO_INCREMENT NOT NULL,
+	CarBodyType nvarchar(50) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_CarBodyTypeDictionary PRIMARY KEY 
+(
+	CarBodyTypeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.CarColorDictionary    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.CarColorDictionary(
+	CarColorID int AUTO_INCREMENT NOT NULL,
+	CarColor nvarchar(50) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_CarColorDictionary PRIMARY KEY 
+(
+	CarColorID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.CarInfo    Script Date: 02.01.2020 12:23:13 ******/
+
+
+
+
+CREATE TABLE dbo.CarInfo(
+	CarID int AUTO_INCREMENT NOT NULL,
+	CarColorID int NOT NULL,
+	CarPhoto char(32) NULL,
+	CarManufacturer nvarchar(32) NOT NULL,
+	CarModel nvarchar(32) NOT NULL,
+	CarReleaseYear char(10) NULL,
+	CarBodyTypeID int NULL,
+	VIN nvarchar(32) NOT NULL,
+	CarCaller nvarchar(32) NULL,
+	CarRegNumber nvarchar(16) NOT NULL,
+	CarEngineNumber nvarchar(16) NOT NULL,
+	CarChassisNumber nvarchar(16) NOT NULL,
+	ObjectID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	HasCamera tinyint NOT NULL,
+	DriverFName nvarchar(20) NOT NULL,
+	DriverMName nvarchar(20) NOT NULL,
+	DriverLName nvarchar(20) NOT NULL,
+	DriverPhone nvarchar(15) NOT NULL,
+	FuelTankVolume int NOT NULL,
+	InstallLocation nvarchar(128) NULL,
+ PRIMARY KEY PK_CarInfo PRIMARY KEY NONCLUSTERED 
+(
+	CarID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.CarSensor    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.CarSensor(
+	SensorID int AUTO_INCREMENT NOT NULL,
+	SNo int NOT NULL,
+	CarSensorTypeID int NOT NULL,
+	RegDate datetime NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	SensorXMLParam text NULL,
+ PRIMARY KEY PK_CarSensor PRIMARY KEY 
+(
+	SensorID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.CarSensorTypeDictionary    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.CarSensorTypeDictionary(
+	CarSensorTypeID int AUTO_INCREMENT NOT NULL,
+	CarSensorType varchar(32) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_CarSensorTypeDictionary PRIMARY KEY 
+(
+	CarSensorTypeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.CarToGroup    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.CarToGroup(
+	CarToGroupID int AUTO_INCREMENT NOT NULL,
+	ObjectID int NOT NULL,
+	GroupID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY CarToGroup_PK PRIMARY KEY 
+(
+	CarToGroupID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.CarToService    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.CarToService(
+	ID int AUTO_INCREMENT NOT NULL,
+	ObjectID int NOT NULL,
+	ServiceID int NOT NULL,
+	StartDate datetime NOT NULL,
+	EndDate datetime NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_CarToService PRIMARY KEY 
+(
+	ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.ClientToService    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.ClientToService(
+	ID int AUTO_INCREMENT NOT NULL,
+	OwnerID int NOT NULL,
+	ServiceID int NOT NULL,
+	StartDate datetime NOT NULL,
+	EndDate datetime NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	HistoryOnID int NOT NULL,
+	HistoryOffID int NULL,
+	ServiceParams text NULL,
+ PRIMARY KEY PK_ClientToService PRIMARY KEY 
+(
+	ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.Command    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.Command(
+	CommandID int AUTO_INCREMENT NOT NULL,
+	CommandActionID int NOT NULL,
+	CommandOnlineID int NOT NULL,
+	CommandOccuranceDate datetime NOT NULL,
+	CommandReadDate datetime NULL,
+	Ackowledged bit NOT NULL,
+	SenderComment nvarchar(200) NULL,
+	UserMapID int NOT NULL,
+	IMEI varchar(50) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY Command_PK PRIMARY KEY 
+(
+	CommandID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.CommandAction    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.CommandAction(
+	CommandActionID int AUTO_INCREMENT NOT NULL,
+	CommandTypeID int NOT NULL,
+	SNo int NOT NULL,
+	ActionID int NOT NULL,
+	IsActual bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY CommandAction_PK PRIMARY KEY 
+(
+	CommandActionID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.CommandTypeDictionary    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.CommandTypeDictionary(
+	CommandTypeID int AUTO_INCREMENT NOT NULL,
+	ObjectDeviceTypeID int NOT NULL,
+	CommandDescription char(64) NOT NULL,
+	CommandCode int NOT NULL,
+	CommandArg_1 int NULL,
+	CommandArg_2 int NULL,
+	CommandText nvarchar(500) NULL,
+	IsActual bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	DefaultActionID int NULL,
+ PRIMARY KEY CommandTypeDictionary_PK PRIMARY KEY 
+(
+	CommandTypeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.DeliveryTypeDictionary    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.DeliveryTypeDictionary(
+	DeliveryTypeID int AUTO_INCREMENT NOT NULL,
+	DeliveryTypeName nvarchar(50) NOT NULL,
+	HasSound bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY DeliveryTypeDictionary_PK PRIMARY KEY 
+(
+	DeliveryTypeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.DeviceHistory    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.DeviceHistory(
+	ID int AUTO_INCREMENT NOT NULL,
+	StartDate datetime NOT NULL,
+	EndDate datetime NULL,
+	ObjectDeviceID int NOT NULL,
+	OwnerID int NULL,
+	UserMapID int NOT NULL,
+	Comment nvarchar(250) NULL,
+	DistributorID int NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	DistributorStoreID int NULL,
+	ObjectID int NULL,
+	IsBroken bit NOT NULL,
+ PRIMARY KEY DeviceHistory_PK PRIMARY KEY 
+(
+	ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.DeviceLog    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.DeviceLog(
+	DeviceLogID int AUTO_INCREMENT NOT NULL,
+	ObjectDeviceID int NOT NULL,
+	UserName nvarchar(32) NOT NULL,
+	ActionDate datetime NOT NULL,
+	Comment nvarchar(2048) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY DeviceLog_PK PRIMARY KEY 
+(
+	DeviceLogID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.DeviceStore    Script Date: 02.01.2020 12:23:14 ******/
+
+
+
+
+CREATE TABLE dbo.DeviceStore(
+	DeviceStoreId int AUTO_INCREMENT NOT NULL,
+	OwnerID int NULL,
+	DeviceID int NOT NULL,
+	DistributorStoreID int NULL,
+	IsBroken bit NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_DeviceStore PRIMARY KEY 
+(
+	DeviceStoreId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY,
+ UNIQUE KEY 
+(
+	DeviceID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.DeviceToObjectAssignment    Script Date: 02.01.2020 12:23:15 ******/
+
+
+
+
+CREATE TABLE dbo.DeviceToObjectAssignment(
+	SNo int AUTO_INCREMENT NOT NULL,
+	StartDate datetime NOT NULL,
+	EndDate datetime NULL,
+	ObjectDeviceID int NOT NULL,
+	ObjectID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY DeviceToObjectAssignment_PK PRIMARY KEY 
+(
+	SNo ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.Distributor    Script Date: 02.01.2020 12:23:15 ******/
+
+
+
+
+CREATE TABLE dbo.Distributor(
+	DistributorID int AUTO_INCREMENT NOT NULL,
+	DistributorRootID int NULL,
+	DistributorTitle nvarchar(50) NOT NULL,
+	DistributorContactName nvarchar(80) NULL,
+	Phone char(20) NULL,
+	Address nvarchar(250) NULL,
+	Mail varchar(50) NULL,
+	RegDate datetime NULL,
+	IsActive bit NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY Distributor_PK PRIMARY KEY 
+(
+	DistributorID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.DistributorStoreDictionary    Script Date: 02.01.2020 12:23:15 ******/
+
+
+
+
+CREATE TABLE dbo.DistributorStoreDictionary(
+	DistributorStoreID int AUTO_INCREMENT NOT NULL,
+	DistrStoreTitle nvarchar(50) NOT NULL,
+	DistrStoreComment nvarchar(200) NULL,
+	DistributorID int NOT NULL,
+	IsActive bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY DistributorStoreDictionary_PK PRIMARY KEY 
+(
+	DistributorStoreID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.EventCodeDictionary    Script Date: 02.01.2020 12:23:15 ******/
+
+
+
+
+CREATE TABLE dbo.EventCodeDictionary(
+	EventCodeID int NOT NULL,
+	EventCodeDescription nvarchar(200) NOT NULL,
+	IsActive bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY EventCodeDictionary_PK PRIMARY KEY 
+(
+	EventCodeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.EventGroup    Script Date: 02.01.2020 12:23:15 ******/
+
+
+
+
+CREATE TABLE dbo.EventGroup(
+	EventGroupID int AUTO_INCREMENT NOT NULL,
+	EventGroupName nvarchar(100) NOT NULL,
+	IsActive bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY EventGroup_PK PRIMARY KEY 
+(
+	EventGroupID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.EventTranslator    Script Date: 02.01.2020 12:23:15 ******/
+
+
+
+
+CREATE TABLE dbo.EventTranslator(
+	ETID int AUTO_INCREMENT NOT NULL,
+	EventCodeID int NOT NULL,
+	SNo int NOT NULL,
+	AlertTypeID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY EventTranslator_PK PRIMARY KEY 
+(
+	ETID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.GeneratedAlertStatus    Script Date: 02.01.2020 12:23:15 ******/
+
+
+
+
+CREATE TABLE dbo.GeneratedAlertStatus(
+	IMEI varchar(50) NOT NULL,
+	NoSignalStatus bit NULL,
+	NoCoordStatus bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	Mask int NULL
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.GlobalSettings    Script Date: 02.01.2020 12:23:15 ******/
+
+
+
+
+CREATE TABLE dbo.GlobalSettings(
+	SettingsID int AUTO_INCREMENT NOT NULL,
+	SettingName nvarchar(50) NOT NULL,
+	StrSettingVal nvarchar(250) NULL,
+	IntSettingVal int NULL,
+	DateSettingVal datetime NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_GlobalSettings PRIMARY KEY 
+(
+	SettingsID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.GuardAssignment    Script Date: 02.01.2020 12:23:29 ******/
+
+
+
+
+CREATE TABLE dbo.GuardAssignment(
+	GuardAssignmentID int AUTO_INCREMENT NOT NULL,
+	GuardID int NOT NULL,
+	UserMapID int NOT NULL,
+	StartDate datetime NOT NULL,
+	FinishDate datetime NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_DutyLog PRIMARY KEY 
+(
+	GuardAssignmentID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.GuardOrder    Script Date: 02.01.2020 12:23:29 ******/
+
+
+
+
+CREATE TABLE dbo.GuardOrder(
+	GuardOrderID int AUTO_INCREMENT NOT NULL,
+	Name nvarchar(50) NOT NULL,
+	RegDate datetime NOT NULL,
+	IsActual bit NOT NULL,
+	DistributorID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY Id_GuardOrder_PK PRIMARY KEY 
+(
+	GuardOrderID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.GuardOrderList    Script Date: 02.01.2020 12:23:29 ******/
+
+
+
+
+CREATE TABLE dbo.GuardOrderList(
+	GuardOrderListID int AUTO_INCREMENT NOT NULL,
+	GuardID int NOT NULL,
+	CarID int NOT NULL,
+	FromDate datetime NOT NULL,
+	ToDate datetime NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_GuardOrderList PRIMARY KEY 
+(
+	GuardOrderListID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.HistoryAction    Script Date: 02.01.2020 12:23:29 ******/
+
+
+
+
+CREATE TABLE dbo.HistoryAction(
+	ActionID int AUTO_INCREMENT NOT NULL,
+	Name nchar(200) NOT NULL,
+ PRIMARY KEY PK_HistoryAction PRIMARY KEY 
+(
+	ActionID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.HistoryDetails    Script Date: 02.01.2020 12:23:29 ******/
+
+
+
+
+CREATE TABLE dbo.HistoryDetails(
+	ID int AUTO_INCREMENT NOT NULL,
+	UserMapID int NOT NULL,
+	Comment nvarchar(250) NULL,
+	TVestion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_HistoryDetails PRIMARY KEY 
+(
+	ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.HistoryDictionary    Script Date: 02.01.2020 12:23:29 ******/
+
+
+
+
+CREATE TABLE dbo.HistoryDictionary(
+	DictionaryID int AUTO_INCREMENT NOT NULL,
+	PageID int NOT NULL,
+	ActionID int NOT NULL,
+	Description nvarchar(200) NULL,
+ PRIMARY KEY PK_HistoryDictionary PRIMARY KEY 
+(
+	DictionaryID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.HistoryEvent    Script Date: 02.01.2020 12:23:29 ******/
+
+
+
+
+CREATE TABLE dbo.HistoryEvent(
+	EventID int AUTO_INCREMENT NOT NULL,
+	DictionaryID int NULL,
+	UserID char(32) NOT NULL,
+	EventDate datetime NOT NULL,
+ PRIMARY KEY PK_HistoryEvent PRIMARY KEY 
+(
+	EventID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.HistoryEventOption    Script Date: 02.01.2020 12:23:30 ******/
+
+
+
+
+CREATE TABLE dbo.HistoryEventOption(
+	EventOptionID int NOT NULL,
+	Options nvarchar(200) NULL,
+	ReportID int NULL,
+ PRIMARY KEY PK_HistoryEventOption PRIMARY KEY 
+(
+	EventOptionID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.HistoryPage    Script Date: 02.01.2020 12:23:30 ******/
+
+
+
+
+CREATE TABLE dbo.HistoryPage(
+	PageID int AUTO_INCREMENT NOT NULL,
+	Name nchar(200) NOT NULL,
+ PRIMARY KEY PK_HistoryPage PRIMARY KEY 
+(
+	PageID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.LockeyUser    Script Date: 02.01.2020 12:23:30 ******/
+
+
+
+
+CREATE TABLE dbo.LockeyUser(
+	OwnerID int NULL,
+	DistributorID int NULL,
+	UserMapID int AUTO_INCREMENT NOT NULL,
+	UserID char(32) NOT NULL,
+	FirstName nvarchar(50) NOT NULL,
+	LastName nvarchar(50) NOT NULL,
+	MiddleName nvarchar(50) NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	PhoneNumber varchar(32) NULL,
+ PRIMARY KEY UserMap_PK PRIMARY KEY 
+(
+	UserMapID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.MessageQueue    Script Date: 02.01.2020 12:23:30 ******/
+
+
+
+
+CREATE TABLE dbo.MessageQueue(
+	MessageID int AUTO_INCREMENT NOT NULL,
+	AlertID int NOT NULL,
+	SubscriptionID int NOT NULL,
+	CreationDate datetime NOT NULL,
+	DeliveryDate datetime NULL,
+	ConfirmDate datetime NULL,
+	DeliveryTypeID int NOT NULL,
+	ObjectID int NOT NULL,
+	UserMapID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY MessageQueue_PK PRIMARY KEY 
+(
+	MessageID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.Object    Script Date: 02.01.2020 12:23:30 ******/
+
+
+
+
+CREATE TABLE dbo.Object(
+	ObjectID int AUTO_INCREMENT NOT NULL,
+	ObjectTypeID int NOT NULL,
+	OwnerID int NOT NULL,
+	RegDate datetime NULL,
+	Properties text NULL,
+	IsActive bit NOT NULL,
+	LastUpdated datetime NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	ObjectName nvarchar(250) NOT NULL,
+ PRIMARY KEY Object_PK PRIMARY KEY 
+(
+	ObjectID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.ObjectActivityLog    Script Date: 02.01.2020 12:23:30 ******/
+
+
+
+
+CREATE TABLE dbo.ObjectActivityLog(
+	ObjectActivityID int AUTO_INCREMENT NOT NULL,
+	IsActive bit NOT NULL,
+	Date datetime NOT NULL,
+	ObjectID int NOT NULL,
+	UserMapID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_ObjectActivityLog PRIMARY KEY 
+(
+	ObjectActivityID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.ObjectDevice    Script Date: 02.01.2020 12:23:30 ******/
+
+
+
+
+CREATE TABLE dbo.ObjectDevice(
+	ObjectDeviceID int AUTO_INCREMENT NOT NULL,
+	CustomDeviceID int NOT NULL,
+	IMEI varchar(50) NOT NULL,
+	SIM varchar(50) NOT NULL,
+	IsActive bit NOT NULL,
+	ObjectDeviceTypeID int NOT NULL,
+	ActivationRequired bit NULL,
+	ActivationKey nvarchar(20) NULL,
+	ObjectHasGPRS bit NOT NULL,
+	ICounter int NOT NULL,
+	DataServerIP varchar(50) NULL,
+	DataServerPort int NULL,
+	DataPeriod int NULL,
+	LastContact datetime NULL,
+	ObjectDeviceRegDate datetime NULL,
+	GPRSpwd nvarchar(50) NOT NULL,
+	HasVideo tinyint NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	SIMCardNum varchar(32) NULL,
+	VInsertion varchar(16) NULL,
+	DeviceComment nvarchar(200) NULL,
+ PRIMARY KEY ObjectDevice_PK PRIMARY KEY 
+(
+	ObjectDeviceID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY,
+ UNIQUE KEY 
+(
+	IMEI ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY,
+ UNIQUE KEY 
+(
+	CustomDeviceID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.ObjectDeviceSnapShot    Script Date: 02.01.2020 12:23:30 ******/
+
+
+
+
+CREATE TABLE dbo.ObjectDeviceSnapShot(
+	DeviceSnapShotID int AUTO_INCREMENT NOT NULL,
+	PositionLatitude float NOT NULL,
+	PositionLongitude float NOT NULL,
+	PositionSpeed float NULL,
+	PositionAltitude int NULL,
+	PositionAddress varchar(150) NULL,
+	PositionOccuranceDate datetime NOT NULL,
+	PositionEntryDate datetime NOT NULL,
+	IMEI varchar(50) NOT NULL,
+	PositionBortdate datetime NOT NULL,
+	PositionLastOccuranceDate datetime NOT NULL,
+	PositionLastBortdate datetime NOT NULL,
+	PositionLastEntryDate datetime NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	Course smallint NOT NULL,
+ PRIMARY KEY ObjectDeviceSnapShot_PK PRIMARY KEY 
+(
+	DeviceSnapShotID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.ObjectDeviceTypeDictionary    Script Date: 02.01.2020 12:23:30 ******/
+
+
+
+
+CREATE TABLE dbo.ObjectDeviceTypeDictionary(
+	ObjectDeviceTypeID int AUTO_INCREMENT NOT NULL,
+	DeviceType nvarchar(20) NOT NULL,
+	DeviceTypeVersion char(10) NULL,
+	DeviceTypeSWVersion char(10) NULL,
+	IsActual bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	FunctionFlags int NOT NULL,
+ PRIMARY KEY ObjectDeviceTypeDictionary_PK PRIMARY KEY 
+(
+	ObjectDeviceTypeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.ObjectImage    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.ObjectImage(
+	ImageID char(32) NOT NULL,
+	ObjectPicture BLOB NULL,
+	LastUpdated datetime NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_ObjectImage PRIMARY KEY 
+(
+	ImageID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.ObjectStatus    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.ObjectStatus(
+	ObjectStatusID int AUTO_INCREMENT NOT NULL,
+	ObjectID int NOT NULL,
+	StatusTypeID int NOT NULL,
+	StartDate datetime NOT NULL,
+	EndDate datetime NULL,
+	Comment nvarchar(150) NULL,
+	UserMapID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY ObjectStatus_PK PRIMARY KEY 
+(
+	ObjectStatusID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.ObjectStatusSnapShot    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.ObjectStatusSnapShot(
+	ObjectStatusSnapShotID int AUTO_INCREMENT NOT NULL,
+	OccuranceDate datetime NOT NULL,
+	StatusTypeID int NOT NULL,
+	EntryDate datetime NULL,
+	IMEI varchar(50) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY ObjectStatusSnapShot_PK PRIMARY KEY 
+(
+	ObjectStatusSnapShotID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.ObjectToRoute    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.ObjectToRoute(
+	RouteToObjectID int AUTO_INCREMENT NOT NULL,
+	RouteID int NOT NULL,
+	RouteExpireTime datetime NOT NULL,
+	ObjectID int NOT NULL,
+	UserMapID int NOT NULL,
+	RegDate datetime NOT NULL,
+	Calendar text NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY ObjectToRoute_PK PRIMARY KEY 
+(
+	RouteToObjectID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.ObserveGroups    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.ObserveGroups(
+	ID int AUTO_INCREMENT NOT NULL,
+	OwnerID int NOT NULL,
+	GroupList text NULL,
+ PRIMARY KEY PK_ObserveGroups PRIMARY KEY 
+(
+	ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.Owner    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.Owner(
+	OwnerID int AUTO_INCREMENT NOT NULL,
+	FirstName nvarchar(50) NOT NULL,
+	DistributorID int NOT NULL,
+	MiddleName nvarchar(50) NULL,
+	LastName varchar(50) NOT NULL,
+	Address nvarchar(250) NULL,
+	HomePhone nvarchar(50) NULL,
+	MobilePhone nvarchar(50) NULL,
+	WorkPhone nvarchar(50) NULL,
+	RegDate datetime NULL,
+	OwnerMail nvarchar(50) NULL,
+	Organization nvarchar(50) NULL,
+	OwnerTypeDictionaryID int NOT NULL,
+	IsActive bit NOT NULL,
+	CodeWord nvarchar(50) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY Owner_PK PRIMARY KEY 
+(
+	OwnerID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.OwnerPaymentInfo    Script Date: 02.01.2020 12:23:31 ******/
+SET ANSI_NULLS OFF
+
+
+
+CREATE TABLE dbo.OwnerPaymentInfo(
+	OwnerPaymentID int AUTO_INCREMENT NOT NULL,
+	OwnerID int NOT NULL,
+	OwnerPaymentCode nvarchar(50) NOT NULL,
+ PRIMARY KEY PK_OwnerPaymentInfo PRIMARY KEY 
+(
+	OwnerPaymentID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.OwnerTypeDictionary    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.OwnerTypeDictionary(
+	OwnerTypeDictionaryID int AUTO_INCREMENT NOT NULL,
+	OwnerTypeDescription nvarchar(20) NOT NULL,
+	IsActual bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY OwnerTypeDictionary_PK PRIMARY KEY 
+(
+	OwnerTypeDictionaryID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.ProblemReport    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.ProblemReport(
+	ProblemID int AUTO_INCREMENT NOT NULL,
+	AuthorID int NOT NULL,
+	AuthorName nvarchar(128) NOT NULL,
+	AuthorPhone nvarchar(50) NULL,
+	AuthorMail nvarchar(50) NULL,
+	CreationDate datetime NOT NULL,
+	ProblemDesc text NOT NULL,
+	ProblemImg BLOB NULL,
+	ProblemState int NOT NULL,
+	UserClosedID int NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY ProblemReport_PK PRIMARY KEY 
+(
+	ProblemID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.ProfileSample    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.ProfileSample(
+	ID int AUTO_INCREMENT NOT NULL,
+	Title varchar(64) NOT NULL,
+	DefaultValuesXML text NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY ID_PK PRIMARY KEY 
+(
+	ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.ReportArchive    Script Date: 02.01.2020 12:23:31 ******/
+
+
+
+
+CREATE TABLE dbo.ReportArchive(
+	ReportID int AUTO_INCREMENT NOT NULL,
+	FromDate datetime NOT NULL,
+	ToDate datetime NOT NULL,
+	CreationDate datetime NOT NULL,
+	MinWorkTime real NOT NULL,
+	VersionReport int NOT NULL,
+ PRIMARY KEY PK_ReportArchive PRIMARY KEY 
+(
+	ReportID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.ReportArchiveData    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.ReportArchiveData(
+	ReportDataID int AUTO_INCREMENT NOT NULL,
+	ClientID int NULL,
+	ReportID int NULL,
+	CountCars int NOT NULL,
+	CountNotActiveCars int NULL,
+	CountSuspendCars int NOT NULL,
+	CountNotWorkingCars int NOT NULL,
+ PRIMARY KEY PK_ReportArchiveData PRIMARY KEY 
+(
+	ReportDataID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.Route    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.Route(
+	RouteID int AUTO_INCREMENT NOT NULL,
+	RouteDescription char(10) NOT NULL,
+	OwnerID int NULL,
+	IsActive bit NOT NULL,
+	LastUpdated datetime NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY Route_PK PRIMARY KEY 
+(
+	RouteID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.RouteDetails    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.RouteDetails(
+	RouteID int AUTO_INCREMENT NOT NULL,
+	Points text NOT NULL,
+	Stops text NOT NULL,
+	IsActive bit NOT NULL,
+	Name nvarchar(64) NOT NULL,
+	TimeInMinutes int NOT NULL,
+	OwnerID int NOT NULL,
+ PRIMARY KEY RouteDetails_PK PRIMARY KEY 
+(
+	RouteID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.Services    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.Services(
+	ID int AUTO_INCREMENT NOT NULL,
+	Title nvarchar(64) NOT NULL,
+	IsClient bit NOT NULL,
+	IsActive bit NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_LWServices PRIMARY KEY 
+(
+	ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.SmsHistory    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.SmsHistory(
+	HistoryID int AUTO_INCREMENT NOT NULL,
+	UserName nvarchar(256) NOT NULL,
+	SentDate datetime NOT NULL,
+	Amount int NOT NULL,
+ PRIMARY KEY SmsHistory_PK PRIMARY KEY 
+(
+	HistoryID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.StatusTypeDictionary    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.StatusTypeDictionary(
+	StatusTypeID int AUTO_INCREMENT NOT NULL,
+	StatusDescription nvarchar(150) NULL,
+	StatusTitle nvarchar(50) NOT NULL,
+	IsActual bit NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY StatusTypeDictionary_PK PRIMARY KEY 
+(
+	StatusTypeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.Subscription    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.Subscription(
+	SubscriptionID int AUTO_INCREMENT NOT NULL,
+	Title varchar(64) NOT NULL,
+	UserMapID int NOT NULL,
+	IsActive bit NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	StartTime time(0) NULL,
+	EndTime time(0) NULL,
+ PRIMARY KEY PK_Subscription PRIMARY KEY 
+(
+	SubscriptionID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.SubscriptionDelivery    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.SubscriptionDelivery(
+	SubscriptionID int NOT NULL,
+	DeliveryTypeID int NOT NULL,
+	PlaySound bit NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY SubscriptionDelivery_PK PRIMARY KEY 
+(
+	SubscriptionID ASC,
+	DeliveryTypeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.SubscriptionEvent    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.SubscriptionEvent(
+	SubscriptionID int NOT NULL,
+	EventGroupID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	EventParam int NULL,
+ PRIMARY KEY PK_SubscriptionEvent PRIMARY KEY 
+(
+	SubscriptionID ASC,
+	EventGroupID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.SubscriptionObject    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.SubscriptionObject(
+	SubscriptionID int NOT NULL,
+	ObjectID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_SubscriptionObject PRIMARY KEY 
+(
+	SubscriptionID ASC,
+	ObjectID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.SubscriptionParams    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.SubscriptionParams(
+	SubscriptionID int NOT NULL,
+	DeliveryTypeID int NOT NULL,
+	Value varchar(3200) NOT NULL,
+ PRIMARY KEY PK_SubscriptionParams PRIMARY KEY 
+(
+	SubscriptionID ASC,
+	DeliveryTypeID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.SubsriptionZoneEvent    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.SubsriptionZoneEvent(
+	SubscriptionID int NOT NULL,
+	EventGroupID int NOT NULL,
+	ZoneID int NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY PK_SubscriptionZoneEvent PRIMARY KEY 
+(
+	SubscriptionID ASC,
+	EventGroupID ASC,
+	ZoneID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.TmpOrder    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.TmpOrder(
+	OrderID int AUTO_INCREMENT NOT NULL,
+	Operator varchar(15) NOT NULL,
+	PhoneNumber varchar(15) NOT NULL,
+ PRIMARY KEY TmpOrder_PK PRIMARY KEY 
+(
+	OrderID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.TmpSim    Script Date: 02.01.2020 12:23:32 ******/
+
+
+
+
+CREATE TABLE dbo.TmpSim(
+	ID int AUTO_INCREMENT NOT NULL,
+	Operator varchar(15) NOT NULL,
+	PhoneNumber varchar(15) NOT NULL,
+	SIM varchar(24) NOT NULL,
+ PRIMARY KEY TmpSim_PK PRIMARY KEY 
+(
+	ID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.UserActionLog    Script Date: 02.01.2020 12:23:33 ******/
+
+
+
+
+CREATE TABLE dbo.UserActionLog(
+	UserActionLogID int AUTO_INCREMENT NOT NULL,
+	UserID varchar(64) NOT NULL,
+	ActionType varchar(8) NOT NULL,
+	ActionDate datetime NOT NULL,
+	ObjectID int NULL,
+	ObjectClassName nvarchar(50) NULL,
+	ChangesInfo text NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY UserActionLog_PK PRIMARY KEY 
+(
+	UserActionLogID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.UserAgreement    Script Date: 02.01.2020 12:23:33 ******/
+
+
+
+
+CREATE TABLE dbo.UserAgreement(
+	UserAgrID int AUTO_INCREMENT NOT NULL,
+	UserMapID int NOT NULL,
+	AgrDate datetime NOT NULL,
+	Accepted bit NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY UserAgreement_PK PRIMARY KEY 
+(
+	UserAgrID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.VehicleToZone    Script Date: 02.01.2020 12:23:33 ******/
+
+
+
+
+CREATE TABLE dbo.VehicleToZone(
+	VehicleToZoneID int AUTO_INCREMENT NOT NULL,
+	VehicleID int NOT NULL,
+	ZoneID int NOT NULL,
+	FromDate datetime NOT NULL,
+	ToDate datetime NULL,
+	Alerted bit NOT NULL,
+	Calendar text NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY VehicleToZone_PK PRIMARY KEY 
+(
+	VehicleToZoneID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
+
+
+/****** Object:  Table dbo.WorkGroup    Script Date: 02.01.2020 12:23:33 ******/
+
+
+
+
+CREATE TABLE dbo.WorkGroup(
+	GroupID int AUTO_INCREMENT NOT NULL,
+	OwnerID int NOT NULL,
+	Name char(64) NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY WGroup_PK PRIMARY KEY 
+(
+	GroupID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+/****** Object:  Table dbo.Zone    Script Date: 02.01.2020 12:23:33 ******/
+
+
+
+
+CREATE TABLE dbo.Zone(
+	ZoneID int AUTO_INCREMENT NOT NULL,
+	Points text NOT NULL,
+	Name nvarchar(64) NOT NULL,
+	OwnerID int NULL,
+	DistributorID int NULL,
+	IsActive bit NOT NULL,
+	LastUpdated datetime NOT NULL,
+	TVersion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+ PRIMARY KEY Zone_PK PRIMARY KEY 
+(
+	ZoneID ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY TEXTIMAGE_ON PRIMARY
