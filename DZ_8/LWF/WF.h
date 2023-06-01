@@ -8,10 +8,17 @@ class WF
 	int M, N;
 	std::string s, t;
 public:
-	WF()
-	{
+	WF() {}
 
+	WF(const WF&) = delete;
+
+	~WF()
+	{
+		for (int i = 0; i < M + 1; i++)
+			delete pm[i];
+		delete[] pm;
 	}
+
 	void Init(const char *sc, const char *tc)
 	{
 		s = std::string(sc);
@@ -35,33 +42,30 @@ public:
 			}
 		}
 	}
+
 	int Rows()
 	{
 		return M;
 	}
+
 	int Columns()
 	{
 		return N;
 	}
+
 	int Get(int i, int j)
 	{
 		if (i > M || j > N)
 			throw "out_of_range";
 		return pm[i][j];
 	}
+
 	void Set(int i, int j, int val)
 	{
 		if (i > M || j > N)
 			throw "out_of_range";
 		pm[i][j] = val;
 	}
-	~WF()
-	{
-		for (int i = 0; i < M + 1; i++)
-			delete pm[i];
-		delete[] pm;
-	}
-	WF(const WF&) = delete;
 private:
 	int min_from_three(int a, int b, int c)
 	{
